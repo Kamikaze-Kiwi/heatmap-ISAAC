@@ -36,18 +36,13 @@
 </pre>
 
 <script>
-  let data = [
-    ['x', 'y', 'Temperature'],
-    [0, 0, 21.9],
-    [0, 14, 22.7],
-    [32, 0, 21.9],
-    [32, 14, 22.1]
-  ];
-
-
   var chart = Highcharts.chart('container', {
     data: {
-      rows: data
+      rows: [['x', 'y', 'Temperature'],
+            [0, 0, 0],
+      [0, 14, 0],
+      [32, 0, 0],
+      [32, 14, 0]]
     },
     chart: {
       type: 'contour',
@@ -112,6 +107,8 @@
 
 <script>
   let dateTimeText = document.getElementById('selectedDateTime');
+
+  changeDateTime(new Date());
 
   function changeDateTime(datetime) {
     dateTimeText.innerText = datetime.toLocaleDateString() + ' ' + datetime.toLocaleTimeString();
