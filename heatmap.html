@@ -4,42 +4,25 @@
 <script src="http://code.highcharts.com/maps/modules/data.js"></script>
 <script src="https://rawgithub.com/paulo-raca/highcharts-contour/master/highcharts-contour.js"></script>
 <script src="https://rawgithub.com/ironwallaby/delaunay/master/delaunay.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+  integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+  integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 
-<div>
+<div class="d-flex justify-content-center">
   <h1 id="selectedDateTime"></h1>
 </div>
 
 <div id="container" style="height: 720px;
   width: 1280px; margin: 0 auto"></div>
 
-<pre id="csv" style="display: none">x, y, Temperature
-0,0,21.9
-0,14,22.7
-32,0,21.9
-32,14,22.1
-11,12,23.2
-11,4,22.7
-11,6,22.6
-18,13,23.8
-22,13,22.5
-22,3,22.7
-24,5,22.1
-24,8,21.9
-25,13,22.1
-25,3,22.1
-3,12,22.7
-3,8,22.6
-30,1,21.9
-30,7,22.9
-31,13,22.1
-4,3,21.9
-</pre>
+
 
 <script>
   var chart = Highcharts.chart('container', {
     data: {
       rows: [['x', 'y', 'Temperature'],
-            [0, 0, 0],
+      [0, 0, 0],
       [0, 14, 0],
       [32, 0, 0],
       [32, 14, 0]]
@@ -116,7 +99,7 @@
     let newData;
 
     fetch('api url', {
-      body: {"dateTime": datetime}
+      body: { "dateTime": datetime }
     }).then(response => console.log(response));
 
     chart.series[0].update({
