@@ -36,99 +36,99 @@
 </pre>
 
 <script>
-  let dateTimeText = document.getElementById('selectedDateTime');
+  let data = [
+    ['x', 'y', 'Temperature'],
+    [0, 0, 21.9],
+    [0, 14, 22.7],
+    [32, 0, 21.9],
+    [32, 14, 22.1]
+  ];
 
-  changeDateTime(Date.now());
 
-  function changeDateTime(datetime) {
-    dateTimeText.innerText = datetime.toLocaleDateString() + ' ' + datetime.toLocaleTimeString();
-  }
+  var chart = Highcharts.chart('container', {
+    data: {
+      rows: data
+    },
+    chart: {
+      type: 'contour',
+      inverted: false,
+      plotBackgroundImage: 'derde-verdieping.svg'
+    },
+    title: {
+      text: null
+    },
+    accessibility: {
+      point: {
+        descriptionFormatter: function (point) {
 
-</script>
-
-<script>
-let data = [
-  ['x', 'y', 'Temperature'],
-  [0, 0, 21.9],
-  [0, 14, 22.7],
-  [32, 0, 21.9],
-  [32, 14, 22.1]
-]
-
-  $(function () {
-    $('#container').highcharts({
-      data: {
-        rows: data
-      },
-      chart: {
-        type: 'contour',
-        inverted: false,
-        plotBackgroundImage: 'derde-verdieping.svg'
+        }
+      }
+    },
+    tooltip: {
+      formatter: function () {
+        return this.point.value + ' °C';
+      }
+    },
+    yAxis: {
+      minPadding: 0,
+      maxPadding: 0,
+      startOnTick: false,
+      endOnTick: false,
+      visible: false,
+      reversed: true,
+      labels: {
+        enabled: false
       },
       title: {
         text: null
       },
-      accessibility: {
-        point: {
-          descriptionFormatter: function (point) {
+    },
+    xAxis: {
+      minPadding: 0,
+      maxPadding: 0,
 
-          }
-        }
-      },
-      tooltip: {
-        formatter: function () {
-          return  this.point.value + ' °C' ;
-        }
-      },
-
-
-      yAxis: {
-        minPadding: 0,
-        maxPadding: 0,
-        startOnTick: false,
-        endOnTick: false,
-        visible: false,
-        reversed: true,
-        labels: {
-          enabled: false
-        },
-        title: {
-          text: null
-        },
-      },
-      xAxis: {
-        minPadding: 0,
-        maxPadding: 0,
-
-        startOnTick: false,
-        endOnTick: false,
-        tickLength: 0,
-        labels: {
-          enabled: false
-        }
-      },
-
-
-
-      colorAxis: {
-        stops: [
-          [0, 'rgba(0,0,250,0.5)'],
-          [0.25, 'rgba(0,250,250,0.5)'],
-          [0.5, 'rgba(0,250,0,0.5)'],
-          [0.75, 'rgba(250,250,0,0.5)'],
-          [1, 'rgba(250,0,0,0.5)']
-        ],
-
-      },
-
-
-
-      series: [{
-        borderWidth: 0
-      }]
-
-
-
-    });
+      startOnTick: false,
+      endOnTick: false,
+      tickLength: 0,
+      labels: {
+        enabled: false
+      }
+    },
+    colorAxis: {
+      stops: [
+        [0, 'rgba(0,0,250,0.5)'],
+        [0.25, 'rgba(0,250,250,0.5)'],
+        [0.5, 'rgba(0,250,0,0.5)'],
+        [0.75, 'rgba(250,250,0,0.5)'],
+        [1, 'rgba(250,0,0,0.5)']
+      ],
+    },
+    series: [{
+      borderWidth: 0
+    }]
   });
+</script>
+
+
+<script>
+  let dateTimeText = document.getElementById('selectedDateTime');
+
+  function changeDateTime(datetime) {
+    dateTimeText.innerText = datetime.toLocaleDateString() + ' ' + datetime.toLocaleTimeString();
+
+    let newData;
+
+    fetch('api url', {
+      body: {"dateTime": datetime}
+    }).then(response => console.log(response));
+
+    chart.series[0].update({
+      data: [['x', 'y', 'Temperature'],
+      [0, 0, 40],
+      [0, 14, 40],
+      [32, 0, 10],
+      [32, 14, 10]]
+    })
+  }
+
 </script>
