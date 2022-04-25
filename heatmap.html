@@ -16,20 +16,22 @@
 </style>
 
 
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+
 
 <div id="container" style="height: 80%;
   width: 80%; margin: 0 auto"></div>
 <div class="container">
-  <label for="slider" class="form-label">Datum -&nbsp; <input onchange=console.log(this.value) type="date" id="dateNow"
-      name="trip-start">&nbsp;&nbsp;Tijd&nbsp;-&nbsp;<input id="nogniet" type="time" step="1" /><span
-      id="SelectValue"></span></label>
-  <input class="form-range" onchange="myFunction(), console.log(this.value)" type="range" min="0" max="86400" value=""
-    step="30" id="slider">
-
-
-
-
-
+  <label for="slider" class="form-label">Datum -&nbsp; 
+    <input onchange="getDataByDay(this.valueAsDate)"  type="date" id="dateNow" name="trip-start">
+    &nbsp;&nbsp;Tijd&nbsp;-&nbsp;
+    <input id="nogniet" type="time" step="1" />
+    <span
+      id="SelectValue">
+    </span>
+  </label>
+  <input class="form-range" oninput="setTimeLimit(), updateHeatmapByTime(this.value / 30)" type="range" min="0" max="86400" value="" step="30" id="slider">
 
   <div id="error" class=" hidden alert alert-primary d-flex align-items-center" role="alert">
     <i class="bi bi-info-circle-fill"></i>
@@ -39,7 +41,8 @@
   </div>
 </div>
 
-
+<input style="display: none;" class="form-range" oninput="console.log('weird'), setTimeLimit(), updateHeatmapByTime(this.value / 30)"
+  type="range" min="0" max="86400" value="" step="30" id="slider">
 
 
 
@@ -73,6 +76,8 @@
     if (seconds < 10) { seconds = "0" + seconds; }
     return hours + ':' + minutes + ':' + seconds; // Return is HH : MM : SS
   }
+
+
   // get time NOW and convert to seconds
   var d = new Date(); // for now
   datetext = d.getHours() + ":" + d.getMinutes() + ":" + d.getSeconds();
@@ -83,11 +88,9 @@
 
   // minutes are worth 60 seconds. Hours are worth 60 minutes.
   var seconds = (+a[0]) * 60 * 60 + (+a[1]) * 60 + (+a[2]);
-  if (seconds) {
 
-  }
+
   document.getElementById('SelectValue').innerHTML = convertHMS(seconds);
-  console.log(seconds);
 
 
   slider.oninput = function () {
@@ -95,7 +98,7 @@
   }
 
   //set limit according to time NOW
-  function myFunction() {
+  function setTimeLimit() {
     var checkDate = new Date().toISOString().slice(0, 10);
     if (document.getElementById("slider").value > seconds && document.getElementById("dateNow").value == checkDate) {
       console.log("success");
@@ -115,10 +118,7 @@
   var chart = Highcharts.chart('container', {
     data: {
       rows: [['x', 'y', 'Temperature'],
-      [0, 0, 0],
-      [0, 14, 0],
-      [32, 0, 0],
-      [32, 14, 0]]
+      [0, 0, 0]]
     },
     chart: {
       type: 'contour',
@@ -183,92 +183,35 @@
 </script>
 
 <script>
-  let selectedDayData = [{ sensors: [{ x: Number, y: Number, temperature: Number }] }];
+  let selectedDayData = [];
 
   let dateTimeText = document.getElementById('selectedDateTime');
 
-  //getDataByDay(new Date());
+  getDataByDay(new Date());
 
   function getDataByDay(datetime) {
-    dateTimeText.innerText = datetime.toLocaleDateString() + ' ' + datetime.toLocaleTimeString();
+    let config = {
+      params: {
+        StartDate: datetime.toISOString()
+      }
+    }
 
-    fetch('http://google.com?' + new URLSearchParams({
-      dateTime: datetime.toISOString()
-    }), {
-      method: 'GET'
+    axios.get(
+      'https://i464318core.venus.fhict.nl/api/temperatures/History', config
+    ).then(function (response){
+      selectedDayData = response.data
+      updateHeatmapByTime(document.getElementById('slider').value / 30);
     })
-      .then(response => console.log(response))
-      .then(data => console.log('success: ' + data))
-      .catch((error) => {
-        console.log('error: ' + error)
-      })
-
-    updateHeatmapByTime(datetime);
   }
 
 
 
   function updateHeatmapByTime(index) {
-
-    //TEMPORARY
-    let mockData = [
-      {
-        "sensors": [
-          {
-            "x": 0,
-            "y": 0,
-            "temperature": 40
-          },
-          {
-            "x": 0,
-            "y": 14,
-            "temperature": 40
-          },
-          {
-            "x": 32,
-            "y": 0,
-            "temperature": 10
-          },
-          {
-            "x": 32,
-            "y": 14,
-            "temperature": 10
-          }
-        ]
-      },
-      {
-        "sensors": [
-          {
-            "x": 0,
-            "y": 0,
-            "temperature": 10
-          },
-          {
-            "x": 0,
-            "y": 14,
-            "temperature": 20
-          },
-          {
-            "x": 32,
-            "y": 0,
-            "temperature": 30
-          },
-          {
-            "x": 32,
-            "y": 14,
-            "temperature": 40
-          }
-        ]
-      }
-    ]
-    //TEMPORARY
-
-    //let currentData = selectedDayData[index];
-    let currentData = mockData[index];
+    let currentData = selectedDayData[index];
 
     let parsedData = [['x', 'y', 'Temperature']];
-    currentData.sensors.forEach(sensor => {
-      parsedData.push([sensor.x, sensor.y, sensor.temperature])
+    currentData.forEach(sensor => {
+      parsedData.push([sensor.x, sensor.y, sensor.value])
     });
 
     console.log(parsedData);
