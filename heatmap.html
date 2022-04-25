@@ -13,10 +13,7 @@
   <h1 id="selectedDateTime"></h1>
 </div>
 
-<div id="container" style="height: 80%;
-  width: 80%; margin: 0 auto"></div>
-
-
+<div id="container" style="height: 80%; width: 80%; margin: 0 auto"></div>
 
 <script>
   var chart = Highcharts.chart('container', {
@@ -89,27 +86,99 @@
   });
 </script>
 
-
 <script>
+  let selectedDayData = [{sensors: [{x: Number, y: Number, temperature: Number}]}];
+
   let dateTimeText = document.getElementById('selectedDateTime');
 
-  changeDateTime(new Date());
+  //getDataByDay(new Date());
 
-  function changeDateTime(datetime) {
+  function getDataByDay(datetime) {
     dateTimeText.innerText = datetime.toLocaleDateString() + ' ' + datetime.toLocaleTimeString();
 
-    let newData;
+    fetch('http://google.com?' + new URLSearchParams({
+      dateTime: datetime.toISOString()
+    }),{
+      method: 'GET'
+    })
+    .then(response => console.log(response))
+    .then(data => console.log('success: ' + data))
+    .catch((error) => {
+      console.log('error: ' + error)
+    })
 
-    fetch('api url', {
-      body: { "dateTime": datetime }
-    }).then(response => console.log(response));
+    updateHeatmapByTime(datetime);
+  }
+
+
+
+  function updateHeatmapByTime(index){
+
+    //TEMPORARY
+    let mockData = [
+      {
+        "sensors": [
+          {
+            "x": 0,
+            "y": 0,
+            "temperature": 40
+          },
+          {
+            "x": 0,
+            "y": 14,
+            "temperature": 40
+          }, 
+          {
+            "x": 32,
+            "y": 0,
+            "temperature": 10
+          },
+          {
+            "x": 32,
+            "y": 14,
+            "temperature": 10
+          }
+        ]
+      },
+      {
+        "sensors": [
+          {
+            "x": 0,
+            "y": 0,
+            "temperature": 10
+          },
+          {
+            "x": 0,
+            "y": 14,
+            "temperature": 20
+          },
+          {
+            "x": 32,
+            "y": 0,
+            "temperature": 30
+          },
+          {
+            "x": 32,
+            "y": 14,
+            "temperature": 40
+          }
+        ]
+      }
+    ]
+    //TEMPORARY
+
+    //let currentData = selectedDayData[index];
+    let currentData = mockData[index];
+
+    let parsedData = [['x', 'y', 'Temperature']];
+    currentData.sensors.forEach(sensor => {
+      parsedData.push([sensor.x, sensor.y, sensor.temperature])
+    });
+
+    console.log(parsedData);
 
     chart.series[0].update({
-      data: [['x', 'y', 'Temperature'],
-      [0, 0, 40],
-      [0, 14, 40],
-      [32, 0, 10],
-      [32, 14, 10]]
+      data: parsedData
     })
   }
 
