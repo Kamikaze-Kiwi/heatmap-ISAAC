@@ -22,7 +22,7 @@
 
 <div id="container" style="height: 80%;
   width: 80%; margin: 0 auto"></div>
-<div class="container">
+<form class="container">
   <label for="slider" class="form-label">Datum -&nbsp; 
     <input onchange="getDataByDay(this.valueAsDate)"  type="date" id="dateNow" name="trip-start">
     &nbsp;&nbsp;Tijd&nbsp;-&nbsp;
@@ -39,7 +39,7 @@
       &nbsp;<span id="errormsg"></span>
     </div>
   </div>
-</div>
+</form>
 
 <input style="display: none;" class="form-range" oninput="console.log('weird'), setTimeLimit(), updateHeatmapByTime(this.value / 30)"
   type="range" min="0" max="86400" value="" step="30" id="slider">
