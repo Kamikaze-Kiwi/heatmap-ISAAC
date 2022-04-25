@@ -31,7 +31,7 @@
       id="SelectValue">
     </span>
   </label>
-  <input class="form-range" oninput="setTimeLimit(), updateHeatmapByTime(this.value / 30)" type="range" min="0" max="86400" value="" step="30" id="slider">
+  <input class="form-range" oninput="setTimeLimit(), updateHeatmapByTime(this.value / 30), SelectValue.innerHTML = convertHMS(this.value)" type="range" min="0" max="86400" value="" step="30" id="slider">
 
   <div id="error" class=" hidden alert alert-primary d-flex align-items-center" role="alert">
     <i class="bi bi-info-circle-fill"></i>
@@ -40,10 +40,6 @@
     </div>
   </div>
 </form>
-
-<input style="display: none;" class="form-range" oninput="console.log('weird'), setTimeLimit(), updateHeatmapByTime(this.value / 30)"
-  type="range" min="0" max="86400" value="" step="30" id="slider">
-
 
 
 <!-- date picker code for today -->
@@ -91,11 +87,6 @@
 
 
   document.getElementById('SelectValue').innerHTML = convertHMS(seconds);
-
-
-  slider.oninput = function () {
-    SelectValue.innerHTML = convertHMS(this.value);
-  }
 
   //set limit according to time NOW
   function setTimeLimit() {
