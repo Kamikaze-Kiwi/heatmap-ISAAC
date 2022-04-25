@@ -19,6 +19,7 @@
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
 
+<body onload="onloadValue()">
 
 <div id="container" style="height: 80%;
   width: 80%; margin: 0 auto"></div>
@@ -26,7 +27,7 @@
   <label for="slider" class="form-label">Datum -&nbsp; 
     <input onchange="getDataByDay(this.valueAsDate)"  type="date" id="dateNow" name="trip-start">
     &nbsp;&nbsp;Tijd&nbsp;-&nbsp;
-    <input id="nogniet" type="time" step="1" />
+    <!--<input id="nogniet" type="time" step="1" />-->
     <span
       id="SelectValue">
     </span>
@@ -41,7 +42,7 @@
   </div>
 </form>
 
-
+</body>
 <!-- date picker code for today -->
 <script>
   var todayDate = new Date().toISOString().slice(0, 10);
@@ -100,8 +101,15 @@
     }
     else {
       document.getElementById("error").style.visibility = "hidden";
+
     }
   }
+
+  	//onload slider value
+    function onloadValue(){
+            document.getElementById("slider").value = seconds;
+      SelectValue.innerHTML = convertHMS(seconds);
+        }
 
 </script>
 
