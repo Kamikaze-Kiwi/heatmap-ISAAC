@@ -19,7 +19,7 @@
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
 
-<body onload="onloadValue()">
+<body>
 
 
   <div class="position-relative">
@@ -40,10 +40,14 @@
   <form class="container">
     <label for="slider" class="form-label">Datum -&nbsp;
       <input onchange="maxDate(), getDataByDay(this.valueAsDate)" type="date" id="dateNow" name="trip-start">
-      &nbsp;&nbsp;Tijd&nbsp;-&nbsp;
+      &nbsp;
+      <button type="button" onclick="location.reload();" class="btn btn-outline-success">NU</button>
+      &nbsp;Tijd&nbsp;-&nbsp;
       <!--<input id="nogniet" type="time" step="1" />-->
-      <span id="SelectValue">
-      </span>
+      <span id="SelectValue"></span>
+
+      &nbsp;
+      <button type="button" class="btn btn-primary"><i class="bi bi-share-fill"></i>&nbsp;Delen</button>
     </label>
     <input class="form-range"
       oninput="setTimeLimit(), updateHeatmapByTime(this.value / 30), SelectValue.innerHTML = convertHMS(this.value)"
@@ -58,6 +62,7 @@
   </form>
 
 </body>
+
 <!-- date picker code for today -->
 <script>
   var todayDate = new Date().toISOString().slice(0, 10);
@@ -107,7 +112,6 @@
   // minutes are worth 60 seconds. Hours are worth 60 minutes.
   var seconds = (+a[0]) * 60 * 60 + (+a[1]) * 60 + (+a[2]);
 
-
   document.getElementById('SelectValue').innerHTML = convertHMS(seconds);
 
   //set limit according to time NOW
@@ -125,11 +129,6 @@
     }
   }
 
-  //onload slider value
-  function onloadValue() {
-    document.getElementById("slider").value = seconds;
-    SelectValue.innerHTML = convertHMS(seconds);
-  }
 
 </script>
 
@@ -212,7 +211,6 @@
 
   let spinner = document.getElementById('loadingSpinner');
 
-  getDataByDay(new Date());
 
   function getDataByDay(datetime) {
     let config = {
@@ -282,3 +280,32 @@
   }
 
 </script>
+
+
+<!-- get date/time from URL parameters -->
+<script>
+  const querystring = window.location.search;
+  const urlParams = new URLSearchParams(querystring);
+  let urlDate = urlParams.get('date');
+  let urlTime = urlParams.get('time');
+
+  if (urlDate != null) {
+    document.getElementById('dateNow').value = urlDate;
+    getDataByDay(new Date(urlDate));
+  }
+  else{
+    getDataByDay(new Date());
+  }
+
+
+
+  if (urlTime != null) {
+    document.getElementById('slider').value = urlTime;
+    document.getElementById('SelectValue').innerHTML = convertHMS(urlTime);
+  }
+  else {
+    document.getElementById("slider").value = seconds;
+    SelectValue.innerHTML = convertHMS(seconds);
+  }
+</script>
+
