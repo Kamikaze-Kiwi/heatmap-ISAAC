@@ -39,7 +39,7 @@
 
   <form class="container">
     <label for="slider" class="form-label">Datum -&nbsp;
-      <input onchange="getDataByDay(this.valueAsDate)" type="date" id="dateNow" name="trip-start">
+      <input onchange="maxDate(), getDataByDay(this.valueAsDate)" type="date" id="dateNow" name="trip-start">
       &nbsp;&nbsp;Tijd&nbsp;-&nbsp;
       <!--<input id="nogniet" type="time" step="1" />-->
       <span id="SelectValue">
@@ -63,6 +63,12 @@
   var todayDate = new Date().toISOString().slice(0, 10);
   document.getElementById('dateNow').value = todayDate;
   document.getElementById('dateNow').max = todayDate;
+
+  function maxDate() {
+    if (document.getElementById('dateNow').value > todayDate) {
+      document.getElementById('dateNow').value = todayDate;
+    }
+  }
 </script>
 
 <!-- show time and convert seconds to HH:MM:SS format -->
@@ -108,7 +114,6 @@
   function setTimeLimit() {
     var checkDate = new Date().toISOString().slice(0, 10);
     if (document.getElementById("slider").value > seconds && document.getElementById("dateNow").value == checkDate) {
-      console.log("success");
       document.getElementById("slider").value = seconds
       SelectValue.innerHTML = convertHMS(seconds);
       document.getElementById("error").style.visibility = "visible";
@@ -199,6 +204,8 @@
 <script>
   let selectedDayData = [];
 
+  let emptyToday = false;
+
   let dateTimeText = document.getElementById('selectedDateTime');
   let errorText = document.getElementById('alert-text');
   let errorDiv = document.getElementById('errorAlert');
@@ -220,18 +227,17 @@
       'https://i464318core.venus.fhict.nl/api/temperatures/History', config
     ).then(function (response) {
       selectedDayData = response.data
-      updateHeatmapByTime(document.getElementById('slider').value / 30);
-      spinner.style.display = 'none';
     }).catch(function (error) {
       alert('Error loading data');
       spinner.style.display = 'none';
     }).finally(function() {
       let anyData = false;
-      selectedDayData.forEach(element => {
-        
+
+      selectedDayData.forEach(element => {       
         if (element.length > 0){
           errorDiv.style.display = 'none';
           anyData = true;
+          emptyToday = false;
           return;
         }
       });
@@ -239,7 +245,11 @@
       if (!anyData){
         errorDiv.style.display = 'block';
         errorText.innerText = 'No data found for this day.';
+        emptyToday = true;
       }
+
+      updateHeatmapByTime(document.getElementById('slider').value / 30);
+      spinner.style.display = 'none';
 
     })
   }
@@ -256,6 +266,14 @@
 
     if (parsedData.length == 1) {
       parsedData.push([0, 0, 0]);
+      if (!emptyToday){
+        errorDiv.style.display = 'block';
+        errorText.innerText = 'No data found for this time.';
+      }
+
+    }
+    else {
+      errorDiv.style.display = 'none';
     }
 
     chart.series[0].update({
