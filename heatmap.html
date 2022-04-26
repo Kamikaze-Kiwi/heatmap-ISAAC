@@ -21,26 +21,41 @@
 
 <body onload="onloadValue()">
 
-<div id="container" style="height: 80%;
-  width: 80%; margin: 0 auto"></div>
-<form class="container">
-  <label for="slider" class="form-label">Datum -&nbsp; 
-    <input onchange="getDataByDay(this.valueAsDate)"  type="date" id="dateNow" name="trip-start">
-    &nbsp;&nbsp;Tijd&nbsp;-&nbsp;
-    <!--<input id="nogniet" type="time" step="1" />-->
-    <span
-      id="SelectValue">
-    </span>
-  </label>
-  <input class="form-range" oninput="setTimeLimit(), updateHeatmapByTime(this.value / 30), SelectValue.innerHTML = convertHMS(this.value)" type="range" min="0" max="86400" value="" step="30" id="slider">
 
-  <div id="error" class=" hidden alert alert-primary d-flex align-items-center" role="alert">
-    <i class="bi bi-info-circle-fill"></i>
-    <div>
-      &nbsp;<span id="errormsg"></span>
+  <div class="position-relative">
+    <div style="display: none; z-index: 2;" id="errorAlert" class="position-absolute top-50 start-50 translate-middle">
+      <div  class="alert alert-danger d-flex align-items-center" role="alert">
+        <i class="bi bi-exclamation-triangle-fill">&nbsp;</i>
+        <div id="alert-text"></div>
+      </div>
     </div>
+    <div id="loadingSpinner" style="z-index: 2; display: none;" class="position-absolute top-50 start-50 translate-middle">
+      <div style="width: 15rem; height: 15rem; border-width: 15px;" class="spinner-border" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+    </div>
+    <div id="container" style="height: 80%; width: 80%; margin: 0 auto"></div>
   </div>
-</form>
+
+  <form class="container">
+    <label for="slider" class="form-label">Datum -&nbsp;
+      <input onchange="getDataByDay(this.valueAsDate)" type="date" id="dateNow" name="trip-start">
+      &nbsp;&nbsp;Tijd&nbsp;-&nbsp;
+      <!--<input id="nogniet" type="time" step="1" />-->
+      <span id="SelectValue">
+      </span>
+    </label>
+    <input class="form-range"
+      oninput="setTimeLimit(), updateHeatmapByTime(this.value / 30), SelectValue.innerHTML = convertHMS(this.value)"
+      type="range" min="0" max="86400" value="" step="30" id="slider">
+
+    <div id="error" class=" hidden alert alert-primary d-flex align-items-center" role="alert">
+      <i class="bi bi-info-circle-fill"></i>
+      <div>
+        &nbsp;<span id="errormsg"></span>
+      </div>
+    </div>
+  </form>
 
 </body>
 <!-- date picker code for today -->
@@ -105,11 +120,11 @@
     }
   }
 
-  	//onload slider value
-    function onloadValue(){
-            document.getElementById("slider").value = seconds;
-      SelectValue.innerHTML = convertHMS(seconds);
-        }
+  //onload slider value
+  function onloadValue() {
+    document.getElementById("slider").value = seconds;
+    SelectValue.innerHTML = convertHMS(seconds);
+  }
 
 </script>
 
@@ -185,6 +200,10 @@
   let selectedDayData = [];
 
   let dateTimeText = document.getElementById('selectedDateTime');
+  let errorText = document.getElementById('alert-text');
+  let errorDiv = document.getElementById('errorAlert');
+
+  let spinner = document.getElementById('loadingSpinner');
 
   getDataByDay(new Date());
 
@@ -195,11 +214,33 @@
       }
     }
 
+    spinner.style.display = 'block';
+
     axios.get(
       'https://i464318core.venus.fhict.nl/api/temperatures/History', config
-    ).then(function (response){
+    ).then(function (response) {
       selectedDayData = response.data
       updateHeatmapByTime(document.getElementById('slider').value / 30);
+      spinner.style.display = 'none';
+    }).catch(function (error) {
+      alert('Error loading data');
+      spinner.style.display = 'none';
+    }).finally(function() {
+      let anyData = false;
+      selectedDayData.forEach(element => {
+        
+        if (element.length > 0){
+          errorDiv.style.display = 'none';
+          anyData = true;
+          return;
+        }
+      });
+
+      if (!anyData){
+        errorDiv.style.display = 'block';
+        errorText.innerText = 'No data found for this day.';
+      }
+
     })
   }
 
@@ -213,7 +254,9 @@
       parsedData.push([sensor.x, sensor.y, sensor.value])
     });
 
-    console.log(parsedData);
+    if (parsedData.length == 1) {
+      parsedData.push([0, 0, 0]);
+    }
 
     chart.series[0].update({
       data: parsedData
