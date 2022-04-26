@@ -31,7 +31,7 @@
     </div>
     <div id="loadingSpinner" style="z-index: 2; display: none;" class="position-absolute top-50 start-50 translate-middle">
       <div style="width: 15rem; height: 15rem; border-width: 15px;" class="spinner-border" role="status">
-        <span class="visually-hidden">Loading...</span>
+        <span class="visually-hidden">Laden...</span>
       </div>
     </div>
     <div id="container" style="height: 80%; width: 80%; margin: 0 auto"></div>
@@ -244,7 +244,7 @@
 
       if (!anyData){
         errorDiv.style.display = 'block';
-        errorText.innerText = 'No data found for this day.';
+        errorText.innerText = 'Geen data gevonden voor deze dag.';
         emptyToday = true;
       }
 
@@ -268,7 +268,7 @@
       parsedData.push([0, 0, 0]);
       if (!emptyToday){
         errorDiv.style.display = 'block';
-        errorText.innerText = 'No data found for this time.';
+        errorText.innerText = 'Er is geen data gevonden voor dit moment.';
       }
 
     }
