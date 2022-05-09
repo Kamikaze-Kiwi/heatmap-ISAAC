@@ -47,7 +47,7 @@
       <span id="SelectValue"></span>
 
       &nbsp;
-      <button type="button" class="btn btn-primary"><i class="bi bi-share-fill"></i>&nbsp;Delen</button>
+      <button onclick="GenerateSharePopup()" data-bs-toggle="modal" data-bs-target="#CopyModal" type="button" class="btn btn-primary"><i class="bi bi-share-fill"></i>&nbsp;Delen</button>
     </label>
     <input class="form-range"
       oninput="setTimeLimit(), updateHeatmapByTime(this.value / 30), SelectValue.innerHTML = convertHMS(this.value)"
@@ -222,7 +222,7 @@
     spinner.style.display = 'block';
 
     axios.get(
-      'https://i464318core.venus.fhict.nl/api/temperatures/History', config
+      'https://i447113.luna.fhict.nl/api/temperatures/History', config
     ).then(function (response) {
       selectedDayData = response.data
     }).catch(function (error) {
@@ -309,3 +309,36 @@
   }
 </script>
 
+
+<script>
+  function GenerateSharePopup(){
+    let shareString = location.pathname + `?date=${document.getElementById('dateNow').value}&time=${document.getElementById('slider').value}`;
+
+    document.getElementById('datetimecopy').value = shareString;
+  }
+
+  function CopyTo(){
+    let copyText = document.getElementById('datetimecopy').value;
+
+    navigator.clipboard.writeText(copyText);
+  }
+</script>
+
+<!-- Modal -->
+<div class="modal fade" id="CopyModal" tabindex="-1" aria-labelledby="CopyModal" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="CopyModalLabel">Datum Delen</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <input type="text" onclick="select()" readonly="readonly" id="datetimecopy" class="form-control"
+          placeholder="datum tijd linkje" value="hoi">
+      </div>
+      <div class="modal-footer">
+        <button onclick="CopyTo()" type="button" id="copybutton" class="btn btn-outline-primary">Kopieer naar klembord</button>
+      </div>
+    </div>
+  </div>
+</div>
