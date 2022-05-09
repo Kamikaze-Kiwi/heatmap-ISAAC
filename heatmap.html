@@ -312,7 +312,7 @@
 
 <script>
   function GenerateSharePopup(){
-    let shareString = location.pathname + `?date=${document.getElementById('dateNow').value}&time=${document.getElementById('slider').value}`;
+    let shareString = location.origin + `?date=${document.getElementById('dateNow').value}&time=${document.getElementById('slider').value}`;
 
     document.getElementById('datetimecopy').value = shareString;
   }
