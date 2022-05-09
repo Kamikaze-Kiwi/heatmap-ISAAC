@@ -55,6 +55,18 @@
       oninput="setTimeLimit(), updateHeatmapByTime(this.value / 30), SelectValue.innerHTML = convertHMS(this.value)"
       type="range" min="0" max="86400" value="" step="30" id="slider">
 
+    <datalist id="steplist">
+      <option>00:00</option>
+      <option>03:00</option>
+      <option>06:00</option>
+      <option>09:00</option>
+      <option>12:00</option>
+      <option>15:00</option>
+      <option>18:00</option>
+      <option>21:00</option>
+      <option>24:00</option>
+    </datalist>
+
     <div id="error" class=" hidden alert alert-primary d-flex align-items-center" role="alert">
       <i class="bi bi-info-circle-fill"></i>
       <div>
@@ -344,3 +356,30 @@
     </div>
   </div>
 </div>
+
+<style>
+  input[type="range"] {
+    width: 100%;
+    margin: 0;
+    box-sizing: border-box;
+  }
+
+  datalist {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    margin-top: -23px;
+    padding-top: 0px;
+  }
+
+  option {
+    width: 0.5ex;
+    display: flex;
+    justify-content: center;
+    align-items: end;
+    background-image: url('timemarker.png');
+    height: 6ex;
+    background-position-y: 5px;
+    background-position-x: center;
+  }
+</style>
