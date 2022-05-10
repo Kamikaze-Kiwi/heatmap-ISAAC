@@ -1,0 +1,29 @@
+input[type="range"] {
+    width: 100%;
+    margin: 0;
+    box-sizing: border-box;
+  }
+
+  datalist {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    margin-top: -23px;
+    padding-top: 0px;
+  }
+
+  option {
+    width: 0.5ex;
+    display: flex;
+    justify-content: center;
+    align-items: end;
+    background-image: url('timemarker.png');
+    height: 6ex;
+    background-position-y: 5px;
+    background-position-x: center;
+    z-index: -1;
+  }
+
+  .hidden {
+    visibility: hidden
+  }
