@@ -16,7 +16,7 @@ var chart = Highcharts.chart('container', {
     chart: {
         type: 'contour', //type: contour makes it so spots on the heatmap with no data will be interpolated.
         inverted: false,
-        plotBackgroundImage: 'derde-verdieping.svg'
+        plotBackgroundImage: 'eerste-verdieping.svg'
     },
     title: {
         text: null
@@ -161,5 +161,6 @@ function updateHeatmapByTime(index) {
     })
 }
 
-
-
+function changeSvg(src){
+    chart.plotBGImage.attr({ href: src })
+}

@@ -3,6 +3,7 @@ const urlParams = new URLSearchParams(querystring);
 
 let urlDate = urlParams.get('date'); //gets the value behind ?date in the url
 let urlTime = urlParams.get('time'); //gets the value behind ?time in the url
+let urlFloor = urlParams.get('floor'); //gets the value behind ?floor in the url
 
 //if date was supplied in URL, load the data for that day. Otherwise get the current date.
 if (urlDate != null) {
@@ -23,9 +24,17 @@ else {
     SelectValue.innerHTML = convertHMS(seconds);
 }
 
+//if floor was supplied in URL, load that floor. Otherwise get the default floor.
+setTimeout(function() {
+    if (urlFloor != null) {
+        floorSelect.value = urlFloor;
+        SetFloor(floorSelect.value);
+    }
+}, 100);
+
 //Generates the url that can be used to share the current date/time.
 function GenerateSharePopup() {
-    let shareString = location.origin + `?date=${document.getElementById('dateNow').value}&time=${document.getElementById('slider').value}`;
+    let shareString = location.origin + `?date=${document.getElementById('dateNow').value}&time=${document.getElementById('slider').value}&floor=${currentFloor}`;
 
     document.getElementById('datetimecopy').value = shareString;
 }
@@ -39,5 +48,5 @@ function CopyTo() {
 
 //Updates the URL with the selected date/time without reloading the page.
 function updateUrlParams(){
-    window.history.replaceState({}, null, `?date=${document.getElementById('dateNow').value}&time=${document.getElementById('slider').value}`);
+    window.history.replaceState({}, null, `?date=${document.getElementById('dateNow').value}&time=${document.getElementById('slider').value}&floor=${currentFloor}`);
 }

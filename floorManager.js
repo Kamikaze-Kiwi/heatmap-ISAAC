@@ -7,8 +7,8 @@ let minFloor = 1; //lowest possible floor
 let maxFloor = 6; //highest possible floor
 
 let floors = [
-    { floor: 1, src: 'derde-verdieping.svg' },
-    { floor: 2, src: 'derde-verdieping.svg' },
+    { floor: 1, src: 'eerste-verdieping.svg' },
+    { floor: 2, src: 'tweede-verdieping.svg' },
     { floor: 3, src: 'derde-verdieping.svg' },
     { floor: 6, src: 'derde-verdieping.svg' },
 ]
@@ -23,10 +23,10 @@ if (currentFloor >= maxFloor) {
     buttonUp.disabled = true;
 }
 
-function GetFloorIndex(floorNum){
+function GetFloor(floorNum){
     return floors.filter(function (x){
         return x.floor == floorNum;
-    })[0].floor
+    })[0]
 }
 
 function FloorUp(){
@@ -56,6 +56,12 @@ function SetFloor(newFloor){
         buttonDown.disabled = false;
     }
 
-    console.log(newFloor);
     currentFloor = newFloor;
+
+    floorSelect.value = newFloor;
+    changeSvg(GetFloor(currentFloor).src);
+
+    updateUrlParams();
+
+    //TODO: get data for this floor
 }
