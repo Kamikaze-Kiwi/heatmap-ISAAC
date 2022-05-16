@@ -56,16 +56,19 @@
     
 
       </label>
+
+      <!-- Change floor -->
       <div class="d-flex float-end" style=" border: 1px black;">
         Verdieping  &nbsp;
         <div class="btn-group">
-        <button class="btn btn-outline-primary">&#8593;</button>
-        <select class="btn border border-primary text-primary dropdown-toggle" style="border-radius: 0; -webkit-appearance: none; -moz-appearance: none; ">
+        <button type="button" onclick="FloorUp()" id="buttonFloorUp" class="btn btn-outline-primary">&#8593;</button>
+        <select onchange="SetFloor(this.value)" id="floorSelect" class="btn border border-primary text-primary dropdown-toggle" style="border-radius: 0; -webkit-appearance: none; -moz-appearance: none; ">
           <option>1</option>
           <option>2</option>
           <option>3</option>
+          <option>6</option>
         </select>
-        <button class="btn btn-outline-primary">&#8595;</button>
+        <button type="button" onclick="FloorDown()" id="buttonFloorDown" class="btn btn-outline-primary">&#8595;</button>
       </div>
       </div>
     
@@ -120,3 +123,4 @@
 <script src="Time.js"></script>
 <script src="Heatmap.js"></script>
 <script src="UrlParams.js"></script>
+<script src="floorManager.js"></script>
