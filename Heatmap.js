@@ -60,11 +60,11 @@ var chart = Highcharts.chart('container', {
     },
     colorAxis: {
         stops: [
-            [0.00, 'rgba(0,0,250,0.5)'],
-            [0.24, 'rgba(0,250,250,0.5)'],
-            [0.33, 'rgba(0,250,0,0.5)'],
-            [0.50, 'rgba(250,250,0,0.5)'],
-            [0.80, 'rgba(250,0,0,0.5)']
+            [0.00, 'rgba(0,0,250,0.5)'],  //dark blue
+            [0.27, 'rgba(0,250,250,0.5)'], //light blue
+            [0.33, 'rgba(0,250,0,0.5)'], //green
+            [0.44, 'rgba(250,250,0,0.5)'], //orange
+            [0.70, 'rgba(250,0,0,0.5)'] //red
         ],
 
         //values below or above min/max will show the same color as if it were 10 or 40 respectively.

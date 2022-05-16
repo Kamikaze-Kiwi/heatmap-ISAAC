@@ -40,7 +40,8 @@
   </div>
   <!-- Date selection menu -->
   <form class="container">
-    <label for="slider" class="form-label">
+    
+      <label for="slider" class="form-label">
       Datum -&nbsp;
       <input onchange="maxDate(), getDataByDay(this.valueAsDate), updateUrlParams()" type="date" id="dateNow"
         name="trip-start">
@@ -51,7 +52,24 @@
       &nbsp;
       <button onclick="GenerateSharePopup()" data-bs-toggle="modal" data-bs-target="#CopyModal" type="button"
         class="btn btn-primary"><i class="bi bi-share-fill"></i>&nbsp;Delen</button>
-    </label>
+      
+    
+
+      </label>
+      <div class="d-flex float-end" style=" border: 1px black;">
+        Verdieping: &nbsp;
+        <button>&#8593;</button>
+        <select>
+          <option>1</option>
+          <option>2</option>
+          <option>3</option>
+        </select>
+        <button>&#8595;</button>
+      </div>
+    
+
+
+
     <!-- Slider -->
     <input class="form-range" onchange="updateUrlParams()" ,
       oninput="setTimeLimit(), updateHeatmapByTime(this.value / 30), SelectValue.innerHTML = convertHMS(this.value)"
