@@ -159,6 +159,8 @@ function updateHeatmapByTime(index) {
     chart.series[0].update({
         data: parsedData
     })
+
+    changeSvg(GetFloor(currentFloor).src);
 }
 
 function changeSvg(src){
