@@ -75,4 +75,5 @@ function SetFloor(newFloor){
     updateUrlParams();
 
     //get data for this floor
+    getDataByDay(document.getElementById('dateNow').valueAsDate);
 }
