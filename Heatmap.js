@@ -113,7 +113,7 @@ function getDataByDay(datetime) {
         //if no data was found for this day, show an error message
         if (!anyData) {
             errorDiv.style.display = 'block';
-            errorText.innerText = 'Er is geen data gevonden voor deze dag.';
+            errorText.innerText = 'Er is geen data gevonden voor deze dag en/of verdieping.';
             emptyToday = true;
         }
 
