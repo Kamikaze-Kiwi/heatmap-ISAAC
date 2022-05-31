@@ -13,6 +13,9 @@ let floors = [
     { floor: 6, src: 'derde-verdieping.svg' },
 ]
 
+//change the floor input to the current floor (default floor)
+document.getElementById('floorSelect').value = currentFloor;
+
 //disable floor down button if already at bottom floor
 if (currentFloor <= minFloor){
     currentFloor = minFloor;
