@@ -35,9 +35,9 @@ setTimeout(function() {
 //Generates the url that can be used to share the current date/time.
 function GenerateSharePopup() {
     let shareString = location.origin + `?date=${document.getElementById('dateNow').value}&time=${document.getElementById('slider').value}&floor=${currentFloor}`;
-
+    let ExtshareString = location.origin + `?date=${document.getElementById('dateNow').value}%26time=${document.getElementById('slider').value}%26floor=${currentFloor}`;
     document.getElementById('datetimecopy').value = shareString;
-    document.getElementById('twitter').href = "https://twitter.com/intent/tweet?text=Checkout%20the%20temperature%20at%20our%20office:%0a" + location.href;
+    document.getElementById('twitter').href = "https://twitter.com/intent/tweet?text=Checkout%20the%20temperature%20at%20our%20office:%0a&url=" + ExtshareString;
 }
 
 //Copies the current url to the user's clipboard
