@@ -35,10 +35,13 @@ setTimeout(function() {
 //Generates the url that can be used to share the current date/time.
 function GenerateSharePopup() {
     let shareString = location.origin + `?date=${document.getElementById('dateNow').value}&time=${document.getElementById('slider').value}&floor=${currentFloor}`;
-    let ExtshareString = location.origin + `?date=${document.getElementById('dateNow').value}%26time=${document.getElementById('slider').value}%26floor=${currentFloor}`;
+
+    //same string as above, but uses %0a instead of &, so the entire url can be shared within a URL parameter
+    let externalShareString = location.origin + `?date=${document.getElementById('dateNow').value}%26time=${document.getElementById('slider').value}%26floor=${currentFloor}`;
+    
     document.getElementById('datetimecopy').value = shareString;
-    document.getElementById('twitter').href = "https://twitter.com/intent/tweet?text=Checkout%20the%20temperature%20at%20our%20office:%0a&url=" + ExtshareString;
-    document.getElementById('email').href = "mailto:?subject=Heatmap%20-%20"+ document.getElementById('dateNow').value +"&body=Bekijk%20hier%20de%20heatmap:%0aurl=" + ExtshareString;
+    document.getElementById('twitter').href = "https://twitter.com/intent/tweet?text=Checkout%20the%20temperature%20at%20our%20office:%0a&url=" + externalShareString;
+    document.getElementById('email').href = "mailto:?subject=Heatmap%20-%20"+ document.getElementById('dateNow').value +"&body=Bekijk%20hier%20de%20heatmap:%0aurl=" + externalShareString;
     
 }
 
