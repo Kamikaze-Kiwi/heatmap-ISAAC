@@ -2,7 +2,7 @@ let buttonUp = document.getElementById('buttonFloorUp');
 let buttonDown = document.getElementById('buttonFloorDown');
 let floorSelect = document.getElementById('floorSelect');
 
-let currentFloor = 1; //default floor
+var currentFloor = 1; //default floor
 let minFloor = 1; //lowest possible floor
 let maxFloor = 6; //highest possible floor
 
@@ -74,5 +74,5 @@ function SetFloor(newFloor){
     //updates the url params with the current floor.
     updateUrlParams();
 
-    //TODO: get data for this floor
+    //get data for this floor
 }

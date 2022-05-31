@@ -81,7 +81,8 @@ var chart = Highcharts.chart('container', {
 function getDataByDay(datetime) {
     let config = {
         params: {
-            StartDate: datetime.toISOString()
+            StartDate: datetime.toISOString(),
+            Floor: currentFloor
         }
     }
 
