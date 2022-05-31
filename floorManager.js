@@ -2,7 +2,7 @@ let buttonUp = document.getElementById('buttonFloorUp');
 let buttonDown = document.getElementById('buttonFloorDown');
 let floorSelect = document.getElementById('floorSelect');
 
-var currentFloor = 1; //default floor
+var currentFloor = 3; //default floor
 let minFloor = 1; //lowest possible floor
 let maxFloor = 6; //highest possible floor
 
