@@ -14,7 +14,7 @@ let floors = [
 ]
 
 //change the floor input to the current floor (default floor)
-document.getElementById('floorSelect').value = currentFloor;
+floorSelect.value = currentFloor;
 
 //disable floor down button if already at bottom floor
 if (currentFloor <= minFloor){
