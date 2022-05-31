@@ -61,8 +61,8 @@
     <div class="d-flex float-end" style=" border: 1px black;">
       Verdieping &nbsp;
       <div class="btn-group"><button type="button" onclick="FloorDown()" id="buttonFloorDown"
-        class="btn btn-outline-primary">
-        <i class="bi bi-caret-down-fill"></i></button>
+          class="btn btn-outline-primary">
+          <i class="bi bi-caret-down-fill"></i></button>
         <select onchange="SetFloor(this.value)" id="floorSelect"
           class="btn border border-primary text-primary dropdown-toggle"
           style="border-radius: 0; -webkit-appearance: none; -moz-appearance: none; ">
@@ -72,7 +72,7 @@
           <option>6</option>
         </select>
         <button type="button" onclick="FloorUp()" id="buttonFloorUp" class="btn btn-outline-primary">
-        <i class="bi bi-caret-up-fill"></i></button>
+          <i class="bi bi-caret-up-fill"></i></button>
       </div>
     </div>
 
@@ -115,8 +115,15 @@
             placeholder="ShareLink" value="ShareLink">
         </div>
         <div class="modal-footer">
-          <button onclick="CopyTo()" type="button" id="copybutton" class="btn btn-outline-primary">Kopieer naar
-            klembord</button>
+          <div>
+         <a class="twitter-share-button btn btn-outline-primary" id="twitter" href="hoi" target="_blank" data-size="large">
+          <i class="bi bi-twitter"></i></a>
+          </div><div>
+            <button onclick="CopyTo()" type="button" id="copybutton" class="btn btn-outline-primary">Kopieer naar
+              klembord</button>
+          
+            </div>
+          
         </div>
       </div>
     </div>

@@ -37,6 +37,7 @@ function GenerateSharePopup() {
     let shareString = location.origin + `?date=${document.getElementById('dateNow').value}&time=${document.getElementById('slider').value}&floor=${currentFloor}`;
 
     document.getElementById('datetimecopy').value = shareString;
+    document.getElementById('twitter').href = "https://twitter.com/intent/tweet?text=Checkout%20the%20temperature%20at%20our%20office:%0a" + location.href;
 }
 
 //Copies the current url to the user's clipboard
