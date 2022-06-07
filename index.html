@@ -52,17 +52,15 @@
       &nbsp;
       <button onclick="GenerateSharePopup()" data-bs-toggle="modal" data-bs-target="#CopyModal" type="button"
         class="btn btn-primary"><i class="bi bi-share-fill"></i>&nbsp;Delen</button>
-
-
-
     </label>
 
     <!-- Change floor -->
     <div class="d-flex float-end" style=" border: 1px black;">
       Verdieping &nbsp;
-      <div class="btn-group"><button type="button" onclick="FloorDown()" id="buttonFloorDown"
-          class="btn btn-outline-primary">
-          <i class="bi bi-caret-down-fill"></i></button>
+      <div class="btn-group">
+        <button type="button" onclick="FloorDown()" id="buttonFloorDown" class="btn btn-outline-primary">
+          <i class="bi bi-caret-down-fill"></i>
+        </button>
         <select onchange="SetFloor(this.value)" id="floorSelect"
           class="btn border border-primary text-primary dropdown-toggle"
           style="border-radius: 0; -webkit-appearance: none; -moz-appearance: none; ">
@@ -72,7 +70,8 @@
           <option>6</option>
         </select>
         <button type="button" onclick="FloorUp()" id="buttonFloorUp" class="btn btn-outline-primary">
-          <i class="bi bi-caret-up-fill"></i></button>
+          <i class="bi bi-caret-up-fill"></i>
+        </button>
       </div>
     </div>
 
@@ -116,15 +115,19 @@
         </div>
         <div class="modal-footer">
           <div>
-         <a class="twitter-share-button btn btn-outline-primary" id="twitter" href="twitter" target="_blank" data-size="large">
-          <i class="bi bi-twitter"></i></a>
-          <a href="mail" id="email" class="btn btn-outline-danger"><i class="bi bi-envelope-plus-fill"></i></a>
-          </div><div>
-            <button onclick="CopyTo()" type="button" id="copybutton" class="btn btn-outline-primary">Kopieer naar
-              klembord</button>
-          
-            </div>
-          
+            <a class="twitter-share-button btn btn-outline-primary" id="twitter" href="twitter" target="_blank"
+              data-size="large">
+              <i class="bi bi-twitter"></i>
+            </a>
+            <a href="mail" id="email" class="btn btn-outline-danger">
+              <i class="bi bi-envelope-plus-fill"></i>
+            </a>
+          </div>
+          <div>
+            <button onclick="CopyTo()" type="button" id="copybutton" class="btn btn-outline-primary">
+              Kopieer naar klembord
+            </button>
+          </div>
         </div>
       </div>
     </div>
