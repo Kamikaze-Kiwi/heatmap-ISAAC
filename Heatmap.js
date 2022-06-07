@@ -132,7 +132,7 @@ function updateHeatmapByTime(index) {
     let currentData = selectedDayData[index];
 
     //parses the received data (JSON) to the rows data used by highcharts. 
-    let parsedData = [['x', 'y', 'Temperature']];
+    let parsedData = [];
     currentData.forEach(sensor => {
         parsedData.push([sensor.x, sensor.y, sensor.value])
     });
