@@ -138,7 +138,7 @@ function updateHeatmapByTime(index) {
     });
 
     //if there is no data for this time, push empty data to the list to prevent highcharts from crashing.
-    if (parsedData.length == 1) {
+    if (parsedData.length == 0) {
         parsedData.push([0, 0, 0]);
 
         //if there is data on another time for this day, 
